@@ -14,7 +14,12 @@ export default function InvoiceForm() {
       items: [{ description: "", quantity: 1, price: 0 }],
     },
   });
-
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "//your-social-bar-code.js"; // or popunder code
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
   const { fields, append, remove } = useFieldArray({
     control,
     name: "items",
@@ -79,11 +84,7 @@ export default function InvoiceForm() {
             placeholder="Invoice Number"
             className="input"
           />
-          <input
-            {...register("invoiceDate")}
-            type="date"
-            className="input"
-          />
+          <input {...register("invoiceDate")} type="date" className="input" />
           <input
             {...register("taxRate")}
             type="number"
@@ -144,11 +145,15 @@ export default function InvoiceForm() {
 
         {/* Totals Preview */}
         <div className="border-t pt-6 text-center text-gray-800">
-          <p className="mb-1">Subtotal: <span className="font-semibold">₹{subtotal.toFixed(2)}</span></p>
-          <p className="mb-1">Tax ({taxRate || 0}%): <span className="font-semibold">₹{taxAmount.toFixed(2)}</span></p>
-          <p className="text-2xl font-bold mt-3">
-            Total: ₹{total.toFixed(2)}
+          <p className="mb-1">
+            Subtotal:{" "}
+            <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
           </p>
+          <p className="mb-1">
+            Tax ({taxRate || 0}%):{" "}
+            <span className="font-semibold">₹{taxAmount.toFixed(2)}</span>
+          </p>
+          <p className="text-2xl font-bold mt-3">Total: ₹{total.toFixed(2)}</p>
         </div>
 
         <button
